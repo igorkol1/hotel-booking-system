@@ -22,7 +22,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -45,7 +45,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -124,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "hotel-booking-system"
+    }
+  },
+  "defaultProject": "hotel-booking-system",
+  "cli": {
+    "analytics": "057decd5-61d9-4cda-af68-87155b356660"
+  }
 }
