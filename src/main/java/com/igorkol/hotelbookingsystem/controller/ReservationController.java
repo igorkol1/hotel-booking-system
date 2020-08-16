@@ -1,6 +1,8 @@
 package com.igorkol.hotelbookingsystem.controller;
 
 import com.igorkol.hotelbookingsystem.model.Reservation;
+import com.igorkol.hotelbookingsystem.service.ReservationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -12,31 +14,34 @@ public class ReservationController {
 
     public static final String ROOM_V_1_RESERVATION = "/room/v1/reservation";
 
-    @GetMapping(path = "{roomId}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<String> getReservationById(@PathVariable String roomId){
-        //TODO ReservationService.get
-        return Mono.just("{}");
+    private final ReservationService reservationService;
+
+    @Autowired
+    public ReservationController(ReservationService reservationService) {
+        this.reservationService = reservationService;
     }
 
-    @PostMapping(path = "",produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<String> createReservation(@RequestBody Mono<Reservation> reservation){
-        //TODO ReservationService.create
-        return Mono.just("{}");
+    @GetMapping(path = "{roomId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<Reservation> getReservationById(@PathVariable String roomId) {
+        return reservationService.getReservations(roomId);
     }
 
-    @PutMapping(path = "{roomId}",produces = MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<String> updateReservation(
+    public Mono<Reservation> createReservation(@RequestBody Mono<Reservation> reservation) {
+        return reservationService.createReservation(reservation);
+    }
+
+    @PutMapping(path = "{roomId}", produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<Reservation> updateReservation(
             @PathVariable String roomId,
-            @RequestBody Mono<Reservation> reservation){
-        //TODO ReservationService.update
-        return Mono.just("{}");
+            @RequestBody Mono<Reservation> reservation) {
+        return reservationService.updateReservation(roomId, reservation);
     }
 
     @DeleteMapping(path = "{roomId}")
-    public Mono<Boolean> deleteReservation(@PathVariable String roomId){
-        //TODO ReservationService.delete
-        return Mono.just(true);
+    public Mono<Boolean> deleteReservation(@PathVariable String roomId) {
+        return reservationService.deleteReservation(roomId);
     }
 }
