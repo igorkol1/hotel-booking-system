@@ -15,6 +15,10 @@ export class ReservationService {
   constructor(private httpClient: HttpClient) {
   }
 
+  getReservations(): Observable<Reservation[]> {
+    return this.httpClient.get<Reservation[]>(this.reservationUrl);
+  }
+
   createReservation(body: ReservationRequest): Observable<Reservation> {
     let httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})

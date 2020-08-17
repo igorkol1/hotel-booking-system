@@ -3,6 +3,7 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {ReservationService} from "./service/reservation.service";
 import {Room} from "./models/room.model";
 import {ReservationRequest} from "./models/reservation-request.model";
+import {Reservation} from "./models/reservation.model";
 
 @Component({
   selector: 'app-root',
@@ -12,12 +13,13 @@ import {ReservationRequest} from "./models/reservation-request.model";
 export class AppComponent implements OnInit {
   title = 'hotel-booking-system';
 
-  rooms: Room[]
+  rooms: Room[];
   roomSearchForm: FormGroup;
   currentCheckIn: string;
   currentCheckOut: string;
   currentRoomNumber: number;
   currentPrice: number;
+  currentReservations: Reservation[];
 
   constructor(private reservationService: ReservationService) {
   }
@@ -44,6 +46,15 @@ export class AppComponent implements OnInit {
       }
 
     })
+
+    this.getCurrentReservations()
+  }
+
+  getCurrentReservations() {
+    this.reservationService.getReservations().subscribe(results => {
+      console.log(results);
+      this.currentReservations = results;
+    })
   }
 
   createReservation() {
@@ -54,6 +65,7 @@ export class AppComponent implements OnInit {
       this.currentPrice
     )).subscribe(result => {
       console.log(result);
+      this.getCurrentReservations();
     })
   }
 

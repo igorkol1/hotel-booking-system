@@ -35,6 +35,22 @@
             alt="Intro Gallery Dining Sample Pictures">
           </div>
 
+          <div class="row" *ngIf="currentReservations">
+            <h1>Current reservations</h1>
+
+            <div *ngFor="let reservation of currentReservations">
+              <hr/>
+              <ul>
+                <li>Room number: {{reservation.roomNumber}}</li>
+                <li>Price: {{reservation.price}}</li>
+                <li>Check-in: {{reservation.checkIn}}</li>
+                <li>Check-out: {{reservation.checkOut}}</li>
+              </ul>
+
+            </div>
+<hr/>
+          </div>
+
           <h1>Available Rooms</h1>
 
           <div class="row" *ngIf="rooms">
