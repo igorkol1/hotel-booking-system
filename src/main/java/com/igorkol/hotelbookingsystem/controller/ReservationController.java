@@ -5,6 +5,7 @@ import com.igorkol.hotelbookingsystem.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -24,6 +25,11 @@ public class ReservationController {
     @GetMapping(path = "{roomId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<Reservation> getReservationById(@PathVariable String roomId) {
         return reservationService.getReservations(roomId);
+    }
+
+    @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Flux<Reservation> getAllReservation() {
+        return reservationService.listOfReservations();
     }
 
     @PostMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE,
